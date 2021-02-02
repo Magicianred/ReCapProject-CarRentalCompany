@@ -48,7 +48,7 @@ namespace ConsoleUI
             #endregion
 
             #region Get
-            Brand brand = brandDal.Get(2);
+            Brand brand = brandDal.Get(4);
             Console.WriteLine("Brand ID: {0}\nBrand Name: {1}\nBrand Model: {2}\n", brand.BrandID, brand.BrandName, brand.BrandModel);
             #endregion
         }

@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class IColorManager : IColorService
+    public class ColorManager : IColorService
     {
         IColorDal _colorDal;
 
-        public IColorManager(IColorDal colorDal)
+        public ColorManager(IColorDal colorDal)
         {
             _colorDal = colorDal;
         }

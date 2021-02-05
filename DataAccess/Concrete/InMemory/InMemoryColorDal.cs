@@ -22,35 +22,47 @@ namespace DataAccess.Concrete.InMemory
                 new Color{ColorID= 5, ColorName= "Red" }
             };
         }
-        public List<Color> Add(Color entity)
+        public void Add(Color entity)
         {
             _colors.Add(entity);
-            return _colors;
         }
 
-        public List<Color> Delete(Color entity)
+        public void Delete(Color entity)
         {
             Color colorToDelete = _colors.SingleOrDefault(c => c.ColorID == entity.ColorID);
             _colors.Remove(colorToDelete);
-            return _colors;
         }
 
-        public Color Get(int id)
+        //public Color Get(int id)
+        //{
+        //    return _colors.Find(c=> c.ColorID == id);
+        //}
+
+        public Color Get(Expression<Func<Color, bool>> filter = null)
         {
-            return _colors.SingleOrDefault(c=> c.ColorID == id);
+            throw new NotImplementedException();
         }
 
-        public List<Color> GetAll()
+        //public List<Color> GetAll()
+        //{
+        //    return _colors;
+        //}
+
+        public List<Color> GetAll(Expression<Func<Color, bool>> filter = null)
         {
-            return _colors;
+            throw new NotImplementedException();
         }
 
-        public List<Color> Update(Color entity)
+        public Color GetById(int id)
+        {
+            return _colors.SingleOrDefault(b => b.ColorID == id);
+        }
+
+        public void Update(Color entity)
         {
             Color colorToUpdate = _colors.SingleOrDefault(c => c.ColorID == entity.ColorID);
             colorToUpdate.ColorID = entity.ColorID;
             colorToUpdate.ColorName = entity.ColorName;
-            return _colors;
         }
     }
 }

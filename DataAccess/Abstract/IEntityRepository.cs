@@ -8,11 +8,12 @@ namespace DataAccess.Abstract
 {
     public interface IEntityRepository<T> where T:class, IEntity, new()
     {
-        List<T> GetAll();
-        T Get(int id);
-        List<T> Add(T entity);
-        List<T> Delete(T entity);
-        List<T> Update(T entity);
+        List<T> GetAll(Expression<Func<T,bool>> filter =null);
+        T Get(Expression<Func<T, bool>> filter);
+        T GetById(int id); // ColorId ve BrandId lerin, Name karşılıklarını almak için tasarlanmış bir metot
+        void Add(T entity);
+        void Delete(T entity);
+        void Update(T entity);
 
     }
 }

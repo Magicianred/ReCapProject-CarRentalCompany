@@ -24,30 +24,44 @@ namespace DataAccess.Concrete
             };
         }
 
-        public List<Car> Add(Car entity)
+        public void Add(Car entity)
         {
             _cars.Add(entity);
-            return _cars;
         }
 
-        public List<Car> Delete(Car entity)
+        public void Delete(Car entity)
         {
             Car carToDelete = _cars.SingleOrDefault(c=> c.CarID == entity.CarID);
             _cars.Remove(carToDelete);
-            return _cars;
+
         }
 
-        public Car Get(int id)
+        //public Car Get(int id)
+        //{
+        //    return _cars.Find(c=> c.CarID == id);
+        //}
+
+        public Car Get(Expression<Func<Car, bool>> filter = null)
         {
-            return _cars.SingleOrDefault(c=> c.CarID == id);
+            throw new NotImplementedException();
         }
 
-        public List<Car> GetAll()
+        //public List<Car> GetAll()
+        //{
+        //    return _cars;
+        //}
+
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
         {
-            return _cars;
+            throw new NotImplementedException();
         }
 
-        public List<Car> Update(Car entity)
+        public Car GetById(int id)
+        {
+            return _cars.SingleOrDefault(b => b.CarID == id);
+        }
+
+        public void Update(Car entity)
         {
             Car carToUpdate = _cars.SingleOrDefault(c => c.CarID == entity.CarID);
             carToUpdate.CarID = entity.CarID;
@@ -55,7 +69,6 @@ namespace DataAccess.Concrete
             carToUpdate.CarBrandID = entity.CarBrandID;
             carToUpdate.DailyPrice = entity.DailyPrice;
             carToUpdate.Description = entity.Description;
-            return _cars;
         }
     }
 }

@@ -22,36 +22,48 @@ namespace DataAccess.Concrete.InMemory
                 new Brand{BrandID = 1, BrandName= "Mercedes", BrandModel = "CLA"}
             };
         }
-        public List<Brand> Add(Brand entity)
+        public void Add(Brand entity)
         {
-            _brands.Add(entity);
-            return _brands;     
+            _brands.Add(entity);    
         }
 
-        public List<Brand> Delete(Brand entity)
+        public void Delete(Brand entity)
         {
             Brand colorToDelete = _brands.SingleOrDefault(b => b.BrandID == entity.BrandID);
             _brands.Remove(colorToDelete);
-            return _brands;
         }
 
-        public Brand Get(int id)
+        //public Brand Get(int id)
+        //{
+        //    return _brands.Find(b=> b.BrandID == id);
+        //}
+
+        public Brand Get(Expression<Func<Brand, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public List<Brand> GetAll()
+        //{
+        //    return _brands;
+        //}
+
+        public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Brand GetById(int id)
         {
             return _brands.SingleOrDefault(b=> b.BrandID == id);
         }
 
-        public List<Brand> GetAll()
-        {
-            return _brands;
-        }
-
-        public List<Brand> Update(Brand entity)
+        public void Update(Brand entity)
         {
             Brand brandToUpdate = _brands.SingleOrDefault(b => b.BrandID == entity.BrandID);
             brandToUpdate.BrandID = entity.BrandID;
             brandToUpdate.BrandName = entity.BrandName;
             brandToUpdate.BrandModel = entity.BrandModel;
-            return _brands;
         }
     }
 }

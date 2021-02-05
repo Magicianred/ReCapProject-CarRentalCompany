@@ -1,6 +1,7 @@
 ﻿using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
@@ -11,46 +12,32 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            #region GetAll
-            BrandManager brandManager = new BrandManager(new InMemoryBrandDal());
-            foreach (var car in brandManager.GetAll())
+            CarManager carManager = new CarManager(new EfCarDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine("Brand Name: {0}\nBrand Model: {1}\n", car.BrandName, car.BrandModel);
+                var brand = brandManager.GetBrandNameByBrandId(car.CarBrandID);
+                var color = colorManager.GetColorNameByColorId(car.CarColorID);
+                Console.WriteLine("Car Id : {0}\nCar Brand: {1}\nCar Color:  {2}\nModel Year:  {3}\nDaily Price:  {4}\nDescription:  {5}\n",
+                    car.CarID, brand.BrandName, color.ColorName, car.ModelYear, car.DailyPrice, car.Description);
             }
-            #endregion
 
-            #region Add
-            ICarDal carDal = new InMemoryCarDal();
-            carDal.Add(new Car { CarID = 6, CarBrandID = 3, CarColorID = 1, DailyPrice = 185, ModelYear = 2017, Description = "3 Adult, 3 Big Suitcase, Diesel" });
+            //carManager.Add(new Car 
+            //{
+            //    CarBrandID=3,
+            //    CarColorID=2,
+            //    DailyPrice=180,
+            //    ModelYear=2016,
+            //    Description="4 Adult / 2 Big Suitcase / Manual Shift / Diesel"
+            //});
 
-            foreach (var car in carDal.GetAll())
-            {
-                Console.WriteLine("Car ID: {0}\nCar ColorID: {1}\nCar DailyPrice: {2},\nDescription: {3}\n", car.CarID, car.CarColorID, car.DailyPrice, car.Description);
-            }
-            #endregion
+            //brandManager.Update(new Brand {BrandID= 2,BrandName= "Wolksvagen", BrandModel="T-Roc" });
+            //colorManager.Delete(new Color {ColorID=2});
+            //colorManager.Add(new Color {ColorName = "White" });
 
-            #region Delete
-            IBrandDal brandDal = new InMemoryBrandDal();
-            brandDal.Delete(new Brand { BrandID = 2, BrandName = "Mercedes", BrandModel = "CLA" });
-            foreach (var car in brandDal.GetAll())
-            {
-                Console.WriteLine("Brand Name: {0}\nBrand Model: {1}\n", car.BrandName, car.BrandModel);
-            }
-            #endregion
 
-            #region Update
-            IColorDal colorDal = new InMemoryColorDal();
-            colorDal.Update(new Color { ColorID = 2, ColorName = "Green" });
-            foreach (var color in colorDal.GetAll())
-            {
-                Console.WriteLine("Color ID: {0}\nColor Name: {1}\n", color.ColorID, color.ColorName);
-            }
-            #endregion
 
-            #region Get
-            Brand brand = brandDal.Get(4);
-            Console.WriteLine("Brand ID: {0}\nBrand Name: {1}\nBrand Model: {2}\n", brand.BrandID, brand.BrandName, brand.BrandModel);
-            #endregion
         }
     }
 }
